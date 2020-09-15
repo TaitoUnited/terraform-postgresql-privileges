@@ -1,6 +1,6 @@
-# PostgreSQL permissions
+# PostgreSQL privileges
 
-Terraform module for managing PostgreSQL cluster permissions. Example usage with two PostgreSQL clusters:
+Terraform module for managing PostgreSQL cluster privileges. Example usage with two PostgreSQL clusters:
 
 ```
 locals {
