@@ -16,27 +16,27 @@
 
 locals {
 
-  roles = try(var.permissions.roles, [])
+  roles = try(var.privileges.roles, [])
 
-  users = try(var.permissions.users, [])
+  users = try(var.privileges.users, [])
 
   allRoles = concat(local.roles, local.users)
 
-  permissions = flatten([
+  privileges = flatten([
     for role in keys(local.allRoles): [
-      for permission in try(role.permissions, []):
-      merge(permission, {
+      for privilege in try(role.privileges, []):
+      merge(privilege, {
         role = role.name
       })
     ]
   ])
 
   /* Grant connect for every role that has some kind of access to a database */
-  connectPermissions = flatten([
+  connectprivileges = flatten([
     for role in keys(local.allRoles): [
       for database in unique([
-        for permission in try(role.permissions, []):
-        permission.database
+        for privilege in try(role.privileges, []):
+        privilege.database
       ]):
       {
         name     = role.name

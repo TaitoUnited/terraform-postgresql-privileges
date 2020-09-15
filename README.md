@@ -23,18 +23,18 @@ provider "postgresql" {
   password        = var.postgres2_password
 }
 
-module "postgres1_permissions" {
-  source                     = "TaitoUnited/permissions/postgresql"
+module "postgres1_privileges" {
+  source                     = "TaitoUnited/privileges/postgresql"
   version                    = "1.0.0"
   provider                   = "postgresql.postgres1"
-  permissions                = databases["postgres1"]
+  privileges                 = databases["postgres1"]
 }
 
-module "postgres2_permissions" {
-  source                     = "TaitoUnited/permissions/postgresql"
+module "postgres2_privileges" {
+  source                     = "TaitoUnited/privileges/postgresql"
   version                    = "1.0.0"
   provider                   = "postgresql.postgres2"
-  permissions                = databases["postgres2"]
+  privileges                 = databases["postgres2"]
 }
 ```
 
@@ -46,10 +46,10 @@ postgres1:
   port: 5432
   adminUsername: postgres
 
-  # Permissions
+  # privileges
   roles:
     - name: my_project_admin
-      permissions:
+      privileges:
         - database: my_project_database
           schema: public
           type: table
@@ -59,7 +59,7 @@ postgres1:
           type: sequence
           privileges: ["ALL"]
     - name: my_project_support
-      permissions:
+      privileges:
         - database: my_project_database
           schema: public
           type: table
@@ -67,7 +67,7 @@ postgres1:
   users:
     - name: john.doe
       roles: [ "my_project_support" ]
-      permissions:
+      privileges:
         - database: another_database
           schema: public
           type: table
@@ -78,10 +78,10 @@ postgres2:
   port: 5432
   adminUsername: postgres
 
-  # Permissions
+  # privileges
   users:
     - name: john.doe
-      permissions:
+      privileges:
         - database: some_database
           schema: public
           type: table

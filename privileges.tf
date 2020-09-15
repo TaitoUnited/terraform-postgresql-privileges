@@ -12,23 +12,23 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-*/
+ */
 
-resource "postgresql_grant" "permission" {
+resource "postgresql_grant" "privilege" {
   depends_on  = [ postgresql_role.user ]
-  count       = length(local.permissions)
-  database    = local.permissions[count.index].database
-  role        = local.permissions[count.index].role
-  schema      = local.permissions[count.index].schema
-  object_type = local.permissions[count.index].type
-  privileges  = local.permissions[count.index].privileges
+  count       = length(local.privileges)
+  database    = local.privileges[count.index].database
+  role        = local.privileges[count.index].role
+  schema      = local.privileges[count.index].schema
+  object_type = local.privileges[count.index].type
+  privileges  = local.privileges[count.index].privileges
 }
 
-resource "postgresql_grant" "connect_permission" {
+resource "postgresql_grant" "connect_privilege" {
   depends_on  = [ postgresql_role.user ]
-  count       = length(local.connectPermissions)
-  database    = local.permissions[count.index].database
-  role        = local.permissions[count.index].role
+  count       = length(local.connectprivileges)
+  database    = local.privileges[count.index].database
+  role        = local.privileges[count.index].role
   schema      = "public"
   object_type = "database"
   privileges  = [ "CONNECT" ]

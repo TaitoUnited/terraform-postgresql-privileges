@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-variable "permissions" {
+variable "privileges" {
   type        = any
   description = "Resources as JSON (see README.md). You can read values from a YAML file with yamldecode()."
 }
