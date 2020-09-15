@@ -49,7 +49,7 @@ postgres1:
   # privileges
   roles:
     - name: my_project_admin
-      privileges:
+      permissions:
         - database: my_project_database
           schema: public
           type: table
@@ -59,7 +59,7 @@ postgres1:
           type: sequence
           privileges: ["ALL"]
     - name: my_project_support
-      privileges:
+      permissions:
         - database: my_project_database
           schema: public
           type: table
@@ -67,7 +67,7 @@ postgres1:
   users:
     - name: john.doe
       roles: [ "my_project_support" ]
-      privileges:
+      permissions:
         - database: another_database
           schema: public
           type: table
@@ -81,7 +81,7 @@ postgres2:
   # privileges
   users:
     - name: john.doe
-      privileges:
+      permissions:
         - database: some_database
           schema: public
           type: table
