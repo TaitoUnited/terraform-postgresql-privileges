@@ -16,9 +16,6 @@
 
 variable "privileges" {
   type = object({
-    host = string
-    port = number
-    adminUsername = string
     roles = list(object({
       name = string
       permissions = list(object({
