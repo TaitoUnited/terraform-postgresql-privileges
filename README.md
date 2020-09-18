@@ -8,40 +8,46 @@ locals {
 }
 
 provider "postgresql" {
-  alias           = "postgres1"
-  host            = databases["postgres1"].host
-  port            = databases["postgres1"].port
-  username        = databases["postgres1"].adminUsername
-  password        = var.postgres1_password
+  alias           = "postgresql1"
+  host            = databases["postgresql1"].host
+  port            = databases["postgresql1"].port
+  username        = databases["postgresql1"].adminUsername
+  password        = var.postgresql1_password
 }
 
 provider "postgresql" {
-  alias           = "postgres2"
-  host            = databases["postgres2"].host
-  port            = databases["postgres2"].port
-  username        = databases["postgres2"].adminUsername
-  password        = var.postgres2_password
+  alias           = "postgresql2"
+  host            = databases["postgresql2"].host
+  port            = databases["postgresql2"].port
+  username        = databases["postgresql2"].adminUsername
+  password        = var.postgresql2_password
 }
 
-module "postgres1_privileges" {
+module "postgresql1_privileges" {
   source                     = "TaitoUnited/privileges/postgresql"
   version                    = "1.0.0"
-  provider                   = "postgresql.postgres1"
-  privileges                 = databases["postgres1"]
+  providers = {
+    postgresql = postgresql.postgresql1
+  }
+
+  privileges                 = databases["postgresql1"]
 }
 
-module "postgres2_privileges" {
+module "postgresql2_privileges" {
   source                     = "TaitoUnited/privileges/postgresql"
   version                    = "1.0.0"
-  provider                   = "postgresql.postgres2"
-  privileges                 = databases["postgres2"]
+  providers = {
+    postgresql = postgresql.postgresql2
+  }
+
+  privileges                 = databases["postgresql2"]
 }
 ```
 
 Example databases.yaml:
 
 ```
-postgres1:
+postgresql1:
   host: 127.127.127.127
   port: 5432
   adminUsername: postgres
@@ -73,7 +79,7 @@ postgres1:
           type: table
           privileges: ["SELECT"]
 
-postgres2:
+postgresql2:
   host: 127.127.127.127
   port: 5432
   adminUsername: postgres
