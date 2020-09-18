@@ -28,7 +28,7 @@ resource "random_string" "user_password" {
   upper   = true
 
   keepers = {
-    username          = local.users[count.index].username
+    name      = local.users[count.index].name
   }
 }
 
