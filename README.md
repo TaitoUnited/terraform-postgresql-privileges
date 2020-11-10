@@ -71,7 +71,7 @@ postgresql1:
           type: table
           privileges: ["SELECT", "UPDATE"]
   users:
-    - name: john.doe
+    - name: john_doe
       roles: [ "my_project_support" ]
       permissions:
         - database: another_database
@@ -86,7 +86,7 @@ postgresql2:
 
   # privileges
   users:
-    - name: john.doe
+    - name: john_doe
       permissions:
         - database: some_database
           schema: public
