@@ -37,7 +37,7 @@ locals {
         permission.database
       ]):
       {
-        name     = role.name
+        role     = role.name
         database = database
       }
     ]
