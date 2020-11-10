@@ -32,7 +32,7 @@ locals {
   /* Grant connect for every role that has some kind of access to a database */
   connectPermissions = flatten([
     for role in local.allRoles: [
-      for database in unique([
+      for database in distinct([
         for permission in try(role.permissions, []):
         permission.database
       ]):
