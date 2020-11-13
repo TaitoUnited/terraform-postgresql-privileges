@@ -24,6 +24,7 @@ locals {
     for role in local.allRoles: [
       for permission in try(role.permissions, []):
       merge(permission, {
+        key  = "${role.name}-${permission.database}-${permission.schema}-${permission.type}"
         role = role.name
       })
     ]
@@ -37,6 +38,7 @@ locals {
         permission.database
       ]):
       {
+        key      = "${role.name}-${database}"
         role     = role.name
         database = database
       }

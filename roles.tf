@@ -15,31 +15,31 @@
  */
 
 resource "postgresql_role" "role" {
-  count       = length(local.roles)
-  name        = local.roles[count.index].name
+  for_each    = {for item in local.roles: item.name => item}
+  name        = each.value.name
   login       = false
 }
 
 resource "random_string" "user_password" {
-  count    = length(local.users)
+  for_each    = {for item in local.users: item.name => item}
 
   length  = 32
   special = false
   upper   = true
 
   keepers = {
-    name      = local.users[count.index].name
+    name      = each.value.name
   }
 }
 
 resource "postgresql_role" "user" {
   depends_on  = [ postgresql_role.role ]
-  count       = length(local.users)
+  for_each    = {for item in local.users: item.name => item}
 
-  name        = local.users[count.index].name
-  roles       = local.users[count.index].roles
+  name        = each.value.name
+  roles       = each.value.roles
   login       = true
-  password    = random_string.user_password[count.index].result
+  password    = random_string.user_password[each.key].result
   /* TODO: valid_until */
   connection_limit = 5
 }

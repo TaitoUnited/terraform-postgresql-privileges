@@ -16,19 +16,19 @@
 
 resource "postgresql_grant" "permission" {
   depends_on  = [ postgresql_role.user ]
-  count       = length(local.permissions)
-  database    = local.permissions[count.index].database
-  role        = local.permissions[count.index].role
-  schema      = local.permissions[count.index].schema
-  object_type = local.permissions[count.index].type
-  privileges  = local.permissions[count.index].privileges
+  for_each    = {for item in local.permissions: item.key => item}
+  database    = each.value.database
+  role        = each.value.role
+  schema      = each.value.schema
+  object_type = each.value.type
+  privileges  = each.value.privileges
 }
 
 resource "postgresql_grant" "connect_permission" {
   depends_on  = [ postgresql_role.user ]
-  count       = length(local.connectPermissions)
-  database    = local.connectPermissions[count.index].database
-  role        = local.connectPermissions[count.index].role
+  for_each    = {for item in local.connectPermissions: item.key => item}
+  database    = each.value.database
+  role        = each.value.role
   schema      = "public"
   object_type = "database"
   privileges  = [ "CONNECT" ]
