@@ -53,6 +53,7 @@ postgresql1:
   adminUsername: postgres
 
   # privileges
+  # WARNING: Names of roles and users are visible for all database users
   roles:
     - name: my_project_admin
       permissions:
@@ -85,6 +86,7 @@ postgresql2:
   adminUsername: postgres
 
   # privileges
+  # WARNING: Names of roles and users are visible for all database users
   users:
     - name: john_doe
       permissions:
