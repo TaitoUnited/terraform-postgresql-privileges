@@ -22,7 +22,7 @@ locals {
 
   permissions = flatten([
     for role in local.allRoles: [
-      for permission in try(role.permissions, []):
+      for permission in coalesce(role.permissions, []):
       merge(permission, {
         key  = "${role.name}-${permission.database}-${permission.schema}-${permission.type}"
         role = role.name
@@ -34,7 +34,7 @@ locals {
   connectPermissions = flatten([
     for role in local.allRoles: [
       for database in distinct([
-        for permission in try(role.permissions, []):
+        for permission in coalesce(role.permissions, []):
         permission.database
       ]):
       {

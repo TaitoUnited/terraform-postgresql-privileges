@@ -18,22 +18,22 @@ variable "privileges" {
   type = object({
     roles = list(object({
       name = string
-      permissions = list(object({
+      permissions = optional(list(object({
         database = string
         schema = string
         type = string
         privileges = list(string)
-      }))
+      })))
     }))
     users = list(object({
       name = string
       roles = list(string)
-      permissions = list(object({
+      permissions = optional(list(object({
         database = string
         schema = string
         type = string
         privileges = list(string)
-      }))
+      })))
     }))
   })
   description = "Resources as JSON (see README.md). You can read values from a YAML file with yamldecode()."
